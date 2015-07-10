@@ -15,7 +15,7 @@ asdf1
 ```
 sub asdf(
     Str $asdf1, 
-    Str :asdf2($asdf2) = { ... }
+    Str :$asdf2 = { ... }
 ) returns Str
 ```
 
@@ -34,7 +34,7 @@ t
 
 ```
 method asdf(
-    Str :asdf($asdf) = { ... }
+    Str :$asdf = { ... }
 ) returns Str
 ```
 
