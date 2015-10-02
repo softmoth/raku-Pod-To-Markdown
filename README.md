@@ -1,6 +1,7 @@
 # Pod::To::Markdown (Perl6)
 
 Render Pod as Markdown.
+[![Build Status](https://travis-ci.org/softmoth/perl6-pod-to-markdown.svg?branch=master)](https://travis-ci.org/softmoth/perl6-pod-to-markdown)
 
 ## Installation
 
