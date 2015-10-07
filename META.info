@@ -7,5 +7,5 @@
   "provides"    : {
     "Pod::To::Markdown"     : "lib/Pod/To/Markdown.pm6"
   },
-  "source-url"  : "git://github.com/jpve/perl6-pod-to-markdown.git"
+  "source-url"  : "git://github.com/softmoth/perl6-pod-to-markdown.git"
 }
