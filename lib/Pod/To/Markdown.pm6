@@ -169,8 +169,13 @@ multi sub pod2markdown(Pod::FormattingCode $pod) is export {
     # It is safer to strip formatting in code blocks
     return $text if $in-code-block;
 
-    $text = '[' ~ $text ~ '](' ~ $text ~ ')'
-        if $pod.type eq 'L';
+    if $pod.type eq 'L' {
+        if $pod.meta.elems > 0 {
+            $text =  '[' ~ $text ~ '](' ~ $pod.meta[0] ~ ')';
+        } else {
+            $text = '[' ~ $text ~ '](' ~ $text ~ ')';
+        }
+    }
 
     $text = %Mformats{$pod.type} ~ $text ~ %Mformats{$pod.type}
         if %Mformats.EXISTS-KEY: $pod.type;
