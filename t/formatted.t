@@ -17,7 +17,9 @@ This text is <var>to be replaced</var>.
 
 This text is invisible.
 
-This text contains a link to [http://www.google.com/](http://www.google.com/).};
+This text contains a link to [http://www.google.com/](http://www.google.com/).
+
+This text contains a link with label to [google](http://www.google.com/).};
 
 is pod2markdown($=pod).trim, $markdown.trim,
     'Decodes formatted text correctly';
@@ -36,4 +38,6 @@ This text is R<to be replaced>.
 This text is Z<blabla>invisible.
 
 This text contains a link to L<http://www.google.com/>.
+
+This text contains a link with label to L<google|http://www.google.com/>.
 =end pod
