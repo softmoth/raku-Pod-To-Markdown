@@ -140,10 +140,11 @@ multi sub pod2markdown(Pod::Block::Declarator $pod) {
 multi sub pod2markdown(Pod::Block::Comment $pod) is export { }
 
 multi sub pod2markdown(Pod::Item $pod) is export {
+    my $level = $pod.level // 1;
     my $markdown = '* ' ~ pod2markdown($pod.contents[0]);
     $markdown ~= "\n\n" ~ pod2markdown($pod.contents[1..Inf]).indent(2)
-	if $pod.contents.elems > 1;
-    $markdown.indent(2);
+        if $pod.contents.elems > 1;
+    $markdown.indent($level * 2);
 }
 
 my %formats =
