@@ -43,7 +43,7 @@ multi sub pod2markdown(Pod::Heading $pod) is export {
 multi sub pod2markdown(Pod::Block::Code $pod) is export {
     temp $in-code-block = True;
     if $pod.config<lang> {
-        ("```", $pod.config<lang>, "\n", $pod.contents>>.&pod2markdown, "```").join.trim-trailing;
+        ("```", $pod.config<lang>, "\n", $pod.contents.join, "```").join;
     }
     else {
         $pod.contents>>.&pod2markdown.join.trim-trailing.indent(4);
