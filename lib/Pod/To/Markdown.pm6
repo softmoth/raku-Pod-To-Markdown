@@ -32,44 +32,45 @@ unit class Pod::To::Markdown;
 my Bool $in-code-block = False;
 
 #| Render Pod as Markdown
-multi sub pod2markdown(Pod::Heading $pod) is export {
+multi sub pod2markdown(Pod::Heading $pod, Bool :$no-fenced-codeblocks) is export {
     my Str $head = pod2markdown(
 	$pod.contents,
-	:positional-separator(' ') # Collapse contents without newlines,
+	:positional-separator(' '), # Collapse contents without newlines,
+    :$no-fenced-codeblocks
     );                             # is this correct behaviour?
     head2markdown($pod.level, $head);
 }
 
-multi sub pod2markdown(Pod::Block::Code $pod) is export {
+multi sub pod2markdown(Pod::Block::Code $pod, Bool :$no-fenced-codeblocks) is export {
     temp $in-code-block = True;
-    if $pod.config<lang> {
+    if $pod.config<lang> and !$no-fenced-codeblocks {
         ("```", $pod.config<lang>, "\n", $pod.contents.join, "```").join;
     }
     else {
-        $pod.contents>>.&pod2markdown.join.trim-trailing.indent(4);
+        $pod.contents>>.&pod2markdown(:$no-fenced-codeblocks).join.trim-trailing.indent(4);
     }
 }
 
-multi sub pod2markdown(Pod::Block::Named $pod) is export {
+multi sub pod2markdown(Pod::Block::Named $pod, Bool :$no-fenced-codeblocks) is export {
     given $pod.name {
-	when 'pod'    { pod2markdown($pod.contents) }
-        when 'para'   { $pod.contents>>.&pod2markdown.join(' ') }
-	when 'defn'   { pod2markdown($pod.contents) }
+	when 'pod'    { pod2markdown($pod.contents, :$no-fenced-codeblocks) }
+        when 'para'   { $pod.contents>>.&pod2markdown(:$no-fenced-codeblocks).join(' ') }
+	when 'defn'   { pod2markdown($pod.contents, :$no-fenced-codeblocks) }
 	when 'config' { }
 	when 'nested' { }
-	default       { head2markdown(1, $pod.name) ~ "\n\n" ~ pod2markdown($pod.contents); }
+	default       { head2markdown(1, $pod.name) ~ "\n\n" ~ pod2markdown($pod.contents, :$no-fenced-codeblocks); }
     }
 }
 
-multi sub pod2markdown(Pod::Block::Para $pod) is export {
-    $pod.contents>>.&pod2markdown.join
+multi sub pod2markdown(Pod::Block::Para $pod, Bool :$no-fenced-codeblocks) is export {
+    $pod.contents>>.&pod2markdown(:$no-fenced-codeblocks).join
 }
 
 sub entity-escape($str) {
     $str.trans([ '&', '<', '>' ] => [ '&amp;', '&lt;', '&gt;' ])
 }
 
-multi sub pod2markdown(Pod::Block::Table $pod) is export {
+multi sub pod2markdown(Pod::Block::Table $pod, Bool :$no-fenced-codeblocks) is export {
     my Str $table = '';
     $table ~= "<table>\n";
     if $pod.headers {
@@ -77,7 +78,7 @@ multi sub pod2markdown(Pod::Block::Table $pod) is export {
 	$table ~= "    <tr>\n";
 	for $pod.headers.item[0..*] -> $thead { # TODO: 0..* is needed, but why
 	                                        #       won't it work without?
-	    $table ~= "      <td>" ~ entity-escape(pod2markdown($thead)) ~ "</td>\n";
+	    $table ~= "      <td>" ~ entity-escape(pod2markdown($thead, :$no-fenced-codeblocks)) ~ "</td>\n";
 	}
 	$table ~= "    </tr>\n";
 	$table ~= "  </thead>\n";
@@ -85,7 +86,7 @@ multi sub pod2markdown(Pod::Block::Table $pod) is export {
     for $pod.contents -> @cols {
 	$table ~= "  <tr>\n";
 	for @cols -> $td {
-	    $table ~= "    <td>" ~ entity-escape(pod2markdown($td)) ~ "</td>\n";
+	    $table ~= "    <td>" ~ entity-escape(pod2markdown($td, :$no-fenced-codeblocks)) ~ "</td>\n";
 	}
 	$table ~= "  </tr>\n";
     }
@@ -93,7 +94,7 @@ multi sub pod2markdown(Pod::Block::Table $pod) is export {
     $table;
 }
 
-multi sub pod2markdown(Pod::Block::Declarator $pod) {
+multi sub pod2markdown(Pod::Block::Declarator $pod, Bool :$no-fenced-codeblocks) {
     my $lvl = 2;
     next unless $pod.WHEREFORE.WHY;
     my $ret = '';
@@ -142,11 +143,11 @@ multi sub pod2markdown(Pod::Block::Declarator $pod) {
     "$what\n\n{$pod.WHEREFORE.WHY.contents}";
 }
 
-multi sub pod2markdown(Pod::Block::Comment $pod) is export { }
+multi sub pod2markdown(Pod::Block::Comment $pod, Bool :$no-fenced-codeblocks) is export { }
 
-multi sub pod2markdown(Pod::Item $pod) is export {
-    my $markdown = '* ' ~ pod2markdown($pod.contents[0]);
-    $markdown ~= "\n\n" ~ pod2markdown($pod.contents[1..Inf]).indent(2)
+multi sub pod2markdown(Pod::Item $pod, Bool :$no-fenced-codeblocks) is export {
+    my $markdown = '* ' ~ pod2markdown($pod.contents[0], :$no-fenced-codeblocks);
+    $markdown ~= "\n\n" ~ pod2markdown($pod.contents[1..Inf], :$no-fenced-codeblocks).indent(2)
 	if $pod.contents.elems > 1;
     $markdown.indent(2);
 }
@@ -167,9 +168,9 @@ my %Mformats =
 my %HTMLformats =
     R => 'var';
 
-multi sub pod2markdown(Pod::FormattingCode $pod) is export {
+multi sub pod2markdown(Pod::FormattingCode $pod, Bool :$no-fenced-codeblocks) is export {
     return '' if $pod.type eq 'Z';
-    my $text = $pod.contents>>.&pod2markdown.join;
+    my $text = $pod.contents>>.&pod2markdown(:$no-fenced-codeblocks).join;
 
     # It is safer to strip formatting in code blocks
     return $text if $in-code-block;
@@ -194,18 +195,18 @@ multi sub pod2markdown(Pod::FormattingCode $pod) is export {
     $text;
 }
 
-multi sub pod2markdown(Positional $pod, Str :$positional-separator = "\n\n") is export {
-    $pod>>.&pod2markdown.join($positional-separator)
+multi sub pod2markdown(Positional $pod, Str :$positional-separator = "\n\n", Bool :$no-fenced-codeblocks) is export {
+    $pod>>.&pod2markdown(:$no-fenced-codeblocks).join($positional-separator)
 }
 
-multi sub pod2markdown(Pod::Config $pod) is export { }
+multi sub pod2markdown(Pod::Config $pod, Bool :$no-fenced-codeblocks) is export { }
 
-multi sub pod2markdown($pod, Str :$positional-separator? = "\n\n") is export {
+multi sub pod2markdown($pod, Str :$positional-separator? = "\n\n", Bool :$no-fenced-codeblocks) is export {
     $pod.Str
 }
 
-method render($pod) {
-    pod2markdown($pod);
+method render($pod, Bool :$no-fenced-codeblocks) {
+    pod2markdown($pod, :$no-fenced-codeblocks);
 }
 
 sub head2markdown(Int $lvl, Str $head) {
