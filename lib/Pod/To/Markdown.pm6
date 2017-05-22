@@ -15,7 +15,7 @@ foobar.pl
 
 =SYNOPSIS
     foobar.pl <options> files ...
-	
+
 say pod2markdown($=pod);
 =end code
 =end SYNOPSIS
@@ -231,8 +231,8 @@ sub head2markdown(Int $lvl, Str $head) {
 # 	my @cols = @_;
 # 	my @ret;
 # 	for 0..@_ -> $i {
-# 	    @ret.push: sprintf('%-'~$i~'s', 
-    
+# 	    @ret.push: sprintf('%-'~$i~'s',
+
 #     if $pod.headers {
 # 	@rows.unshift([$pod.headers.item>>.chars.map({'-' x $_})]);
 # 	@rows.unshift($pod.headers.item);
@@ -242,7 +242,7 @@ sub head2markdown(Int $lvl, Str $head) {
 
 sub signature2markdown($params) {
       $params.elems ??
-      "(\n    " ~ $params.map({ $_.perl }).join(", \n    ") ~ "\n)" 
+      "(\n    " ~ $params.map({ $_.perl }).join(", \n    ") ~ "\n)"
       !! "()";
 }
 
