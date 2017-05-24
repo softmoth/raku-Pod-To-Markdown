@@ -4,7 +4,7 @@ use lib <blib/lib lib>;
 use Test;
 use Pod::To::Markdown;
 
-plan 1;
+plan 2;
 
 my $markdown = Q:to/ENDING/;
 ```perl6
