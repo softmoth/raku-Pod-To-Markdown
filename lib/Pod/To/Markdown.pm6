@@ -108,7 +108,9 @@ multi sub pod2markdown(Pod::Block::Declarator $pod, Bool :$no-fenced-codeblocks)
                @params.pop if @params[*-1].name eq '%_';
 	    my $name = $_.name;
 	    $ret ~= head2markdown($lvl+1, "method $name") ~ "\n\n";
-	    $ret ~= "```\nmethod $name" ~ signature2markdown(@params) ~ "$returns\n```";
+	    $ret ~= $no-fenced-codeblocks
+            ?? ("method $name" ~ signature2markdown(@params) ~ "$returns").indent(4)
+            !! "```\nmethod $name" ~ signature2markdown(@params) ~ "$returns\n```";
         }
         when Sub {
 	    my $returns = ($_.signature.returns.WHICH.perl eq 'Mu')
@@ -117,7 +119,9 @@ multi sub pod2markdown(Pod::Block::Declarator $pod, Bool :$no-fenced-codeblocks)
 	    my @params = $_.signature.params;
 	    my $name = $_.name;
 	    $ret ~= head2markdown($lvl+1, "sub $name") ~ "\n\n";
-	    $ret ~= "```\nsub $name" ~ signature2markdown(@params) ~ "$returns\n```";
+	    $ret ~= $no-fenced-codeblocks
+            ?? ("sub $name" ~ signature2markdown(@params) ~ "$returns").indent(4)
+            !! "```\nsub $name" ~ signature2markdown(@params) ~ "$returns\n```";
         }
         when .HOW ~~ Metamodel::ClassHOW {
 	    if ($_.WHAT.perl eq 'Attribute') {
