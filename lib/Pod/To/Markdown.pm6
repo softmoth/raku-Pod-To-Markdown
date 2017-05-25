@@ -7,7 +7,7 @@ From command line:
     $ perl6 --doc=Markdown lib/to/class.pm
 
 From Perl6:
-=begin code
+=begin code :lang<perl6>
 use Pod::To::Markdown;
 
 =NAME
@@ -18,6 +18,11 @@ foobar.pl
 
 say pod2markdown($=pod);
 =end code
+To render without fenced codeblocks C<```>, as some markdown engines don't support
+this, use the :no-fenced-codeblocks option.
+If you want to have code show up as C<```perl6> to enable syntax highlighting on
+certain markdown renderers, use:
+C<=begin code :lang<perl6>>
 =end SYNOPSIS
 
 =begin EXPORTS
