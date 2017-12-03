@@ -4,7 +4,7 @@ Pod::To::Markdown - Render Pod as Markdown
 =begin SYNOPSIS
 From command line:
 
-    $ perl6 --doc=Markdown lib/to/class.pm
+    $ perl6 --doc=Markdown lib/To/Class.pm
 
 From Perl6:
 =begin code :lang<perl6>
@@ -18,17 +18,11 @@ foobar.pl
 
 say pod2markdown($=pod);
 =end code
-To render without fenced codeblocks C<```>, as some markdown engines don't support
-this, use the :no-fenced-codeblocks option.
-If you want to have code show up as C<```perl6> to enable syntax highlighting on
-certain markdown renderers, use:
-C<=begin code :lang<perl6>>
 =end SYNOPSIS
 
-=begin EXPORTS
-    class Pod::To::Markdown;
-    sub pod2markdown; # See below
-=end EXPORTS
+=for EXPORTS
+    class Pod::To::Markdown
+    sub pod2markdown
 
 =DESCRIPTION
 
@@ -232,6 +226,17 @@ multi sub pod2markdown(Pod::Config $pod, Bool :$no-fenced-codeblocks) is export 
 multi sub pod2markdown($pod, Str :$positional-separator? = "\n\n", Bool :$no-fenced-codeblocks) returns Str is export {
     $pod.Str
 }
+=begin pod
+To render without fenced codeblocks (C<```>), as some markdown engines
+don't support this, use the :no-fenced-codeblocks option. If you want to
+have code show up as C<```perl6> to enable syntax highlighting on
+certain markdown renderers, use:
+
+=begin code
+=begin code :lang<perl6>
+=end code
+
+=end pod
 
 method render($pod, Bool :$no-fenced-codeblocks) {
     pod2markdown($pod, :$no-fenced-codeblocks);
@@ -270,9 +275,12 @@ sub head2markdown(Int $lvl, Str $head) {
 
 sub signature2markdown($params) {
       $params.elems ??
-      "(\n    " ~ $params.map({ $_.perl }).join(", \n    ") ~ "\n)"
+      "(\n    " ~ $params.map({ $_.perl }).join(",\n    ") ~ "\n)"
       !! "()";
 }
+
+=LICENSE
+Artistic 2.0
 
 }
 
