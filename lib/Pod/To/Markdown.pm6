@@ -26,7 +26,10 @@ say pod2markdown($=pod);
 
 =DESCRIPTION
 
+
 class Pod::To::Markdown {
+
+use Pod::To::HTML;
 
 my Bool $in-code-block = False;
 
@@ -70,27 +73,7 @@ sub entity-escape($str) {
 }
 
 multi sub pod2markdown(Pod::Block::Table $pod, Bool :$no-fenced-codeblocks) is export {
-    my Str $table = '';
-    $table ~= "<table>\n";
-    if $pod.headers {
-        $table ~= "  <thead>\n";
-        $table ~= "    <tr>\n";
-        for $pod.headers.item[0..*] -> $thead { # TODO: 0..* is needed, but why
-                                                #       won't it work without?
-            $table ~= "      <td>" ~ entity-escape(pod2markdown($thead, :$no-fenced-codeblocks)) ~ "</td>\n";
-        }
-        $table ~= "    </tr>\n";
-        $table ~= "  </thead>\n";
-    }
-    for $pod.contents -> @cols {
-        $table ~= "  <tr>\n";
-        for @cols -> $td {
-            $table ~= "    <td>" ~ entity-escape(pod2markdown($td, :$no-fenced-codeblocks)) ~ "</td>\n";
-        }
-        $table ~= "  </tr>\n";
-    }
-    $table ~= "</table>";
-    $table;
+    return node2html($pod).trim;
 }
 
 multi sub pod2markdown(Pod::Block::Declarator $pod, Bool :$no-fenced-codeblocks) {
