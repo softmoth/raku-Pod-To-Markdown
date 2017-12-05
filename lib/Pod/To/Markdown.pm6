@@ -43,6 +43,8 @@ unit class Pod::To::Markdown;
 
 use Pod::To::HTML;
 
+#my sub Debug(&code) { &code() }
+my sub Debug(&code) { }
 
 #| Render Pod as Markdown
 multi sub pod2markdown($pod, Bool :$no-fenced-codeblocks)
@@ -93,8 +95,8 @@ multi sub node2md(Pod::Block::Named $pod) {
         when 'pod'    { node2md($pod.contents) }
         when 'para'   { $pod.contents>>.&node2md.join(' ') }
         when 'defn'   { node2md($pod.contents) }
-        when 'config' { }
-        when 'nested' { }
+        when 'config' { Debug { die "NAMED CONFIG" }; '' }
+        when 'nested' { Debug { die "NAMED NESTED" }; '' }
         default       { head2md(1, $pod.name) ~ "\n\n" ~ node2md($pod.contents); }
     }
 }
@@ -143,7 +145,9 @@ multi sub node2md(Pod::Block::Declarator $pod) {
     $what ~ "\n\n" ~ node2md($pod.WHEREFORE.WHY.contents);
 }
 
-multi sub node2md(Pod::Block::Comment $pod) { }
+multi sub node2md(Pod::Block::Comment $pod) {
+    ''
+}
 
 multi sub node2md(Pod::Item $pod) {
     my $level = $pod.level // 1;
@@ -207,10 +211,12 @@ multi sub node2md(Pod::FormattingCode $pod) {
 }
 
 multi sub node2md(Positional $pod) {
-    $pod>>.&node2md.join($*positional-separator)
+    $pod>>.&node2md.grep(*.?chars).join($*positional-separator)
 }
 
-multi sub node2md(Pod::Config $pod) { }
+multi sub node2md(Pod::Config $pod) {
+    ''
+}
 
 multi sub node2md($pod) {
     $pod.Str
