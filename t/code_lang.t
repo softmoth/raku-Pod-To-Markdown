@@ -6,7 +6,7 @@ use Pod::To::Markdown;
 
 plan 2;
 
-my $markdown = Q:to/ENDING/;
+is pod2markdown($=pod), Q:to/ENDING/.chomp,
 ```perl6
 say "Here is some perl 6 code!";
 
@@ -17,7 +17,10 @@ exit 0;
 
     Some code without lang set here
 ENDING
-my $no-fenced-markdown = Q:to/ENDING/;
+   'Pod with lang set renders correctly.';
+
+
+is pod2markdown($=pod, :no-fenced-codeblocks), Q:to/ENDING/.chomp,
     say "Here is some perl 6 code!";
 
     say "Here is another line here";
@@ -26,21 +29,16 @@ my $no-fenced-markdown = Q:to/ENDING/;
 
     Some code without lang set here
 ENDING
-
-
-is pod2markdown($=pod), $markdown.chomp,
-   'Pod with lang set renders correctly.';
-is pod2markdown($=pod, :no-fenced-codeblocks), $no-fenced-markdown.chomp,
     'Pod with lang and :no-fenced-codeblocks renders correctly';
-=begin pod
-=begin code :lang<perl6>
-say "Here is some perl 6 code!";
+
+=begin code :lang<perl6> :allow<B I>
+say "B<Here is some perl 6 code!>";
 
 say "Here is another line here";
 
 exit 0;
 =end code
-=begin code
-Some code without lang set here
+
+=begin code :allow<B I>
+Some code I<without> lang set here
 =end code
-=end pod

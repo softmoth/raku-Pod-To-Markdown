@@ -12,7 +12,7 @@ asdf1
 
 ### sub asdf
 
-```
+```perl6
 sub asdf(
     Str $asdf1,
     Str :$asdf2 = "asdf"
@@ -32,7 +32,7 @@ t
 
 ### method asdf
 
-```
+```perl6
 method asdf(
     Str :$asdf = "asdf"
 ) returns Str

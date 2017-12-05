@@ -84,12 +84,8 @@ multi sub node2md(Pod::Heading $pod) {
 
 multi sub node2md(Pod::Block::Code $pod) {
     my $*in-code-block = True;
-    if $pod.config<lang> and $*fenced-codeblocks {
-        ("```", $pod.config<lang>, "\n", $pod.contents.join, "```").join;
-    }
-    else {
-        $pod.contents>>.&node2md.join.trim-trailing.indent(4);
-    }
+    code2md($pod.contents>>.&node2md.join.trim-trailing,
+        :lang($pod.config<lang>));
 }
 
 multi sub node2md(Pod::Block::Named $pod) {
@@ -229,6 +225,15 @@ sub head2md(Int $lvl, Str $head) {
     }
 }
 
+sub code2md(Str $code, :$lang) {
+    if $lang and $*fenced-codeblocks {
+        "```$lang\n$code\n```"
+    }
+    else {
+        $code.indent(4)
+    }
+}
+
 sub signature2md(Int $lvl, Callable $sig, Bool :$method!) {
     # TODO Add multi / proto? How?
     my $name = join ' ', $method ?? 'method' !! 'sub', $sig.name;
@@ -246,9 +251,7 @@ sub signature2md(Int $lvl, Callable $sig, Bool :$method!) {
         !! "()";
     $code ~= ' returns ' ~ $sig.signature.returns.perl
         unless $sig.signature.returns.WHICH =:= Mu;
-    $code = $*fenced-codeblocks
-        ?? "```\n$code\n```"
-        !! $code.indent(4);
+    $code = code2md($code, :lang<perl6>);
     head2md($lvl+1, $name) ~ "\n\n" ~ $code;
 }
 
