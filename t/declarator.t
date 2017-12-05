@@ -14,8 +14,10 @@ module Asdf1 {
 
 #| Asdf2
 class Asdf2 does Positional  {
-    #| t
-    has Str $.t = 'asdf';
+    #| a is public
+    has Str $.a = 'public';
+    #| b is private
+    has Str $!b = 'private';
 
     #| Method asdf2
     method asdf(Str :$asdf? = 'asdf') returns Str {
@@ -45,9 +47,13 @@ class Asdf2
 
 Asdf2
 
-### has Str $.t
+### has Str $.a
 
-t
+a is public
+
+### has Str $!b
+
+b is private
 
 ### method asdf
 
@@ -81,9 +87,13 @@ class Asdf2
 
 Asdf2
 
-### has Str $.t
+### has Str $.a
 
-t
+a is public
+
+### has Str $!b
+
+b is private
 
 ### method asdf
 

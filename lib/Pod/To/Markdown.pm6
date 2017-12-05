@@ -125,7 +125,8 @@ multi sub node2md(Pod::Block::Declarator $pod) {
         }
         when .HOW ~~ Metamodel::ClassHOW {
             if (.WHAT =:= Attribute) {
-                my $name = .gist.subst('!', '.');
+                my $name = .gist;
+                $name .= subst('!', '.') if .has_accessor;
                 head2md($lvl+1, "has $name");
             }
             else {
