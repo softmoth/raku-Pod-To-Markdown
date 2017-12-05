@@ -23,7 +23,7 @@ foobar.pl
 =SYNOPSIS
     foobar.pl <options> files ...
 
-say pod2markdown($=pod);
+print pod2markdown($=pod);
 ```
 
 EXPORTS
@@ -39,7 +39,7 @@ DESCRIPTION
 
 ### sub pod2markdown
 
-```
+```perl6
 sub pod2markdown(
     $pod,
     Bool :$no-fenced-codeblocks
@@ -54,7 +54,7 @@ To render without fenced codeblocks (```` ``` ````), as some markdown engines do
 
 ### method render
 
-```
+```perl6
 method render(
     $pod,
     Bool :$no-fenced-codeblocks
@@ -62,8 +62,6 @@ method render(
 ```
 
 Render Pod as Markdown, see pod2markdown
-
-
 
 LICENSE
 =======

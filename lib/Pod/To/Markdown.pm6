@@ -7,8 +7,8 @@ From command line:
     $ perl6 --doc=Markdown lib/To/Class.pm
 
 From Perl6:
-=begin code :lang<perl6>
-use Pod::To::Markdown;
+=begin code :lang<perl6> :allow<B>
+B<use Pod::To::Markdown;>
 
 =NAME
 foobar.pl
@@ -16,7 +16,7 @@ foobar.pl
 =SYNOPSIS
     foobar.pl <options> files ...
 
-say pod2markdown($=pod);
+print B<pod2markdown($=pod)>;
 =end code
 =end SYNOPSIS
 
@@ -35,7 +35,7 @@ say pod2markdown($=pod);
 # perl6 lib/Pod/To/Markdown.pm6 > README.md
 
 sub MAIN() {
-    say ::('Pod::To::Markdown').render($=pod);
+    print ::('Pod::To::Markdown').render($=pod);
 }
 
 
@@ -54,7 +54,7 @@ is export
     my Bool $*fenced-codeblocks = !$no-fenced-codeblocks;
     my Bool $*in-code-block = False;
     my $*positional-separator = "\n\n";
-    node2md($pod);
+    node2md($pod) ~ "\n";
 }
 
 =begin pod
