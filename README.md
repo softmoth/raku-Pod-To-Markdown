@@ -63,7 +63,9 @@ method render(
 
 Render Pod as Markdown, see pod2markdown
 
+
+
 LICENSE
 =======
 
-This is free software; you can redistribute it and/or modify it under the terms of the [Artistic License 2.0](http://www.perlfoundation.org/artistic_license_2_0).
+This is free software; you can redistribute it and/or modify it under the terms of The [Artistic License 2.0](http://www.perlfoundation.org/artistic_license_2_0).
