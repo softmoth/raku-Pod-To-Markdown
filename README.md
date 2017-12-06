@@ -4,6 +4,7 @@ NAME
 Pod::To::Markdown - Render Pod as Markdown
 
 [![Build Status](https://travis-ci.org/softmoth/perl6-pod-to-markdown.svg?branch=master)](https://travis-ci.org/softmoth/perl6-pod-to-markdown)
+[![Windows status](https://ci.appveyor.com/api/projects/status/github/softmoth/perl6-pod-to-markdown?branch=master&passingText=Windows%20-%20OK&failingText=Windows%20-%20FAIL&pendingText=Windows%20-%20pending&svg=true)](https://ci.appveyor.com/project/softmoth/perl6-pod-to-markdown/branch/master)
 
 SYNOPSIS
 ========
