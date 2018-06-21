@@ -95,6 +95,8 @@ multi sub node2md(Pod::Block::Named $pod) {
         when 'defn'   { node2md($pod.contents) }
         when 'config' { Debug { die "NAMED CONFIG" }; '' }
         when 'nested' { Debug { die "NAMED NESTED" }; '' }
+        when 'over'   { Debug { die "OVER DIRECTIVE" }; '' }
+        when 'back'   { Debug { die "BACK DIRECTIVE" }; '' }
         default       { head2md(1, $pod.name) ~ "\n\n" ~ node2md($pod.contents); }
     }
 }
