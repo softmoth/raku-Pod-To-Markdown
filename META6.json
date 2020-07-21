@@ -6,7 +6,7 @@
   "description" : "Render Perl6 Pod as Markdown",
   "authors"     : [ "Jorn van Engelen" ],
   "depends"     : [
-      "Pod::To::HTML"
+      "Pod::To::HTML:auth<github:Raku>"
   ],
   "provides"    : {
     "Pod::To::Markdown": "lib/Pod/To/Markdown.pm6"

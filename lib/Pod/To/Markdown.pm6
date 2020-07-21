@@ -41,7 +41,7 @@ sub MAIN() {
 
 unit class Pod::To::Markdown;
 
-use Pod::To::HTML;
+use Pod::To::HTML:auth<github:Raku>;
 
 #my sub Debug(&code) { &code() }
 my sub Debug(&code) { }
