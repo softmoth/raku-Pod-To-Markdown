@@ -91,4 +91,26 @@ is pod2markdown($=pod[$ix++]), q:to/EOF/, 'Table data are formatted as HTML';
 </table>
 EOF
 
+# Issue #26: This is a special-case hack, due to RT 114480 (Rakudo issue #2863)
+=for table :caption<Entity Formatter Hack>
+Name  | Formula                                     | Example           | Notes
+---   | ---                                         | ---               | ---
+frac  | x - E<0x230a>xE<0x230b>                     | frac(-1.3): 0.7   | 1
+afrac | \|x\| - E<0x230a>\|x\|E<0x230b>             | afrac(-1.3): 0.3  | 2
+ofrac | x - E<0x230a>\|x\|E<0x230b>E<0x22c5>sign(x) | ofrac(-1.3): -0.3 | 3
+
+is pod2markdown($=pod[$ix++]),
+    q:to/EOF/,
+    <table class="pod-table">
+    <caption>Entity Formatter Hack</caption>
+    <thead><tr>
+    <th>Name</th> <th>Formula</th> <th>Example</th> <th>Notes</th>
+    </tr></thead>
+    <tbody>
+    <tr> <td>frac</td> <td>x - &#x230a;x&#x230b;</td> <td>frac(-1.3): 0.7</td> <td>1</td> </tr> <tr> <td>afrac</td> <td>|x| - &#x230a;|x|&#x230b;</td> <td>afrac(-1.3): 0.3</td> <td>2</td> </tr> <tr> <td>ofrac</td> <td>x - &#x230a;|x|&#x230b;&#x22c5;sign(x)</td> <td>ofrac(-1.3): -0.3</td> <td>3</td> </tr>
+    </tbody>
+    </table>
+    EOF
+    'Issue 26: Hack converts E<...> to &...; in table';
+
 # vim:set ft=perl6:

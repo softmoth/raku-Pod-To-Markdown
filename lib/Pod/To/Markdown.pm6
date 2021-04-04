@@ -108,7 +108,16 @@ sub entity-escape($str) {
 }
 
 multi sub node2md(Pod::Block::Table $pod) {
-    return node2html($pod).trim;
+    node2html($pod)
+            .trim
+            # Rakudo's Pod parsing is incomplete; see Rakudo issue #2863
+            #
+            # Here we implement a hack to allow Unicode entities to be
+            # displayed in tables; it's a specific enough pattern that it
+            # should not unintentionally transform the text.
+            #
+            # See Pod::To::Markdown issue #26
+            .subst(:g, rx/ 'E&lt;0x' (<.xdigit> ** 4) '&gt;' /, { "&#x{$0};" })
 }
 
 multi sub node2md(Pod::Block::Declarator $pod) {
