@@ -1,6 +1,8 @@
 Revision history for Pod-To-Markdown
 
 {{$NEXT}}
+
+0.2.0  2021-04-04T17:40:52-04:00
     - Convert E<...> entities to HTML inside table cells (Issue #26)
     - It's Raku, not Perl 6.
 
