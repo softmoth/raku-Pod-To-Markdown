@@ -1,5 +1,3 @@
-use v6;
-
 use Test;
 use Pod::To::Markdown;
 plan 1;
@@ -9,7 +7,7 @@ Here is a single backtick `` ` ``.
 
 Here is two backticks ``` `` ```.
 
-Here is one ```` ```perl6```` with three.
+Here is one ```` ```raku```` with three.
 EOF
 
 
@@ -18,7 +16,7 @@ Here is a single backtick C<`>.
 
 Here is two backticks C<``>.
 
-Here is one C<```perl6> with three.
+Here is one C<```raku> with three.
 =end pod
 
-# vim:set ft=perl6:
+# vim:set ft=raku:

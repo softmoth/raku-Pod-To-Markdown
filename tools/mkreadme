@@ -1,8 +1,8 @@
 #! /bin/sh
 
-perl6 ./lib/Pod/To/Markdown.pm6 | perl6 -pe '
+raku ./lib/Pod/To/Markdown.pm6 | raku -pe '
 
-my $gh-repo = "softmoth/perl6-pod-to-markdown";
+my $gh-repo = "softmoth/raku-Pod-To-Markdown";
 
 if / ^ "#"* SYNOPSIS / {
     print qq:to/END/ if ".travis.yml".IO.e;

@@ -1,5 +1,3 @@
-use v6;
-
 use Test;
 use Pod::To::Markdown;
 plan 1;
@@ -17,7 +15,7 @@ This text is R<to be replaced>.
 
 This text is Z<blabla>invisible.
 
-This text contains a link to L<https://perl6.org/>.
+This text contains a link to L<https://raku.org/>.
 
 This text contains a bare fragment link L<#anchor>.
 
@@ -39,7 +37,7 @@ This text is <var>to be replaced</var>.
 
 This text is invisible.
 
-This text contains a link to [https://perl6.org/](https://perl6.org/).
+This text contains a link to [https://raku.org/](https://raku.org/).
 
 This text contains a bare fragment link [anchor](#anchor).
 
@@ -48,4 +46,4 @@ This text contains a link with label to [TPF](https://perlfoundation.org/).
 And awesome [link **with *formatting***](http://p6weekly.wordpress.com/)!
 EOF
 
-# vim:set ft=perl6:
+# vim:set ft=raku:

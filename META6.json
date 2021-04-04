@@ -2,14 +2,14 @@
   "perl"        : "6.*",
   "name"        : "Pod::To::Markdown",
   "license"     : "Artistic-2.0",
-  "version"     : "0.1.4",
-  "description" : "Render Perl6 Pod as Markdown",
+  "version"     : "0.2.0",
+  "description" : "Render Raku Pod as Markdown",
   "authors"     : [ "Jorn van Engelen" ],
   "depends"     : [
       "Pod::To::HTML:auth<github:Raku>"
   ],
   "provides"    : {
-    "Pod::To::Markdown": "lib/Pod/To/Markdown.pm6"
+    "Pod::To::Markdown": "lib/Pod/To/Markdown.rakumod"
   },
-  "source-url"  : "git://github.com/softmoth/perl6-pod-to-markdown.git"
+  "source-url"  : "git://github.com/softmoth/raku-Pod-To-Markdown.git"
 }

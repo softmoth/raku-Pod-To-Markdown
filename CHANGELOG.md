@@ -1,3 +1,6 @@
+# v0.2.0
+* It's Raku, not Perl 6.
+
 # v0.1.3
 * Handle formatting codes in fenced code blocks (Bug #13)
 * Add a final newline to pod2markdown() output

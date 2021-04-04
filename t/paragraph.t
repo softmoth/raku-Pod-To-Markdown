@@ -1,5 +1,3 @@
-use v6;
-
 use Test;
 use Pod::To::Markdown;
 
@@ -42,4 +40,4 @@ Paragraph paragraph
 Block paragraph
 EOF
 
-# vim:set ft=perl6:
+# vim:set ft=raku:

@@ -1,5 +1,3 @@
-use v6;
-
 use Test;
 use Pod::To::Markdown;
 
@@ -113,4 +111,4 @@ is pod2markdown($=pod[$ix++]),
     EOF
     'Issue 26: Hack converts E<...> to &...; in table';
 
-# vim:set ft=perl6:
+# vim:set ft=raku:

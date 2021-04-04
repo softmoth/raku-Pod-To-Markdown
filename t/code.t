@@ -1,5 +1,3 @@
-use v6;
-
 use Test;
 use Pod::To::Markdown;
 
@@ -84,4 +82,4 @@ asdf
 asdf
 EOF
 
-# vim:set ft=perl6:
+# vim:set ft=raku:

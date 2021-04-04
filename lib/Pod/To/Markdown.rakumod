@@ -4,10 +4,10 @@ Pod::To::Markdown - Render Pod as Markdown
 =begin SYNOPSIS
 From command line:
 
-    $ perl6 --doc=Markdown lib/To/Class.pm
+    $ raku --doc=Markdown lib/To/Class.pm
 
-From Perl6:
-=begin code :lang<perl6> :allow<B>
+From Raku:
+=begin code :lang<raku> :allow<B>
 B<use Pod::To::Markdown;>
 
 =NAME
@@ -27,12 +27,12 @@ print B<pod2markdown($=pod)>;
 =DESCRIPTION
 
 # Trying to process this file itself results in the following:
-# $ perl6 --doc=Markdown lib/Pod/To/Markdown.pm6
+# $ raku --doc=Markdown lib/Pod/To/Markdown.pm6
 # ===SORRY!===
 # P6M Merging GLOBAL symbols failed: duplicate definition of symbol Markdown
 #
 # Here is a hack to generate README.md from this Pod:
-# perl6 lib/Pod/To/Markdown.pm6 > README.md
+# raku lib/Pod/To/Markdown.pm6 > README.md
 
 sub MAIN() {
     print ::('Pod::To::Markdown').render($=pod);
@@ -58,10 +58,10 @@ method render($pod, Bool :$no-fenced-codeblocks --> Str)
 =begin pod
 To render without fenced codeblocks (C<```>), as some markdown engines
 don't support this, use the :no-fenced-codeblocks option. If you want to
-have code show up as C<```perl6> to enable syntax highlighting on
+have code show up as C<```raku> to enable syntax highlighting on
 certain markdown renderers, use:
     =begin code
-    =begin code :lang<perl6>
+    =begin code :lang<raku>
     =end code
 =end pod
 #`[ Fake Pod directive to help syntax highlighters cope:
@@ -265,7 +265,7 @@ sub signature2md(Int $lvl, Callable $sig, Bool :$method!) {
         !! "()";
     $code ~= ' returns ' ~ $sig.signature.returns.perl
         unless $sig.signature.returns.WHICH =:= Mu;
-    $code = code2md($code, :lang<perl6>);
+    $code = code2md($code, :lang<raku>);
     head2md($lvl+1, $name) ~ "\n\n" ~ $code;
 }
 

@@ -1,5 +1,3 @@
-use v6;
-
 use Test;
 use Pod::To::Markdown;
 plan 2;
@@ -33,7 +31,7 @@ asdf1
 
 ### sub asdf
 
-```perl6
+```raku
 sub asdf(
     Str $asdf1,
     Str :$asdf2 = "asdf"
@@ -57,7 +55,7 @@ b is private
 
 ### multi method asdf
 
-```perl6
+```raku
 multi method asdf(
     Str :$asdf = "asdf"
 ) returns Str
@@ -104,4 +102,4 @@ b is private
 Method asdf2
 EOF
 
-# vim:set ft=perl6:
+# vim:set ft=raku:

@@ -3,19 +3,19 @@ NAME
 
 Pod::To::Markdown - Render Pod as Markdown
 
-[![Build Status](https://travis-ci.org/softmoth/perl6-pod-to-markdown.svg?branch=master)](https://travis-ci.org/softmoth/perl6-pod-to-markdown)
-[![Windows status](https://ci.appveyor.com/api/projects/status/github/softmoth/perl6-pod-to-markdown?branch=master&passingText=Windows%20-%20OK&failingText=Windows%20-%20FAIL&pendingText=Windows%20-%20pending&svg=true)](https://ci.appveyor.com/project/softmoth/perl6-pod-to-markdown/branch/master)
+[![Build Status](https://travis-ci.org/softmoth/raku-Pod-To-Markdown.svg?branch=master)](https://travis-ci.org/softmoth/raku-Pod-To-Markdown)
+[![Windows status](https://ci.appveyor.com/api/projects/status/github/softmoth/raku-Pod-To-Markdown?branch=master&passingText=Windows%20-%20OK&failingText=Windows%20-%20FAIL&pendingText=Windows%20-%20pending&svg=true)](https://ci.appveyor.com/project/softmoth/raku-Pod-To-Markdown/branch/master)
 
 SYNOPSIS
 ========
 
 From command line:
 
-    $ perl6 --doc=Markdown lib/To/Class.pm
+    $ raku --doc=Markdown lib/To/Class.pm
 
-From Perl6:
+From Raku:
 
-```perl6
+```raku
 use Pod::To::Markdown;
 
 =NAME
@@ -40,7 +40,7 @@ DESCRIPTION
 
 ### sub pod2markdown
 
-```perl6
+```raku
 sub pod2markdown(
     $pod,
     Bool :$no-fenced-codeblocks
@@ -49,13 +49,13 @@ sub pod2markdown(
 
 Render Pod as Markdown
 
-To render without fenced codeblocks (```` ``` ````), as some markdown engines don't support this, use the :no-fenced-codeblocks option. If you want to have code show up as ```` ```perl6```` to enable syntax highlighting on certain markdown renderers, use:
+To render without fenced codeblocks (```` ``` ````), as some markdown engines don't support this, use the :no-fenced-codeblocks option. If you want to have code show up as ```` ```raku```` to enable syntax highlighting on certain markdown renderers, use:
 
-    =begin code :lang<perl6>
+    =begin code :lang<raku>
 
 ### method render
 
-```perl6
+```raku
 method render(
     $pod,
     Bool :$no-fenced-codeblocks

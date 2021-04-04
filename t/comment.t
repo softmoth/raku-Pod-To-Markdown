@@ -1,5 +1,3 @@
-use v6;
-
 use Test;
 use Pod::To::Markdown;
 
@@ -19,4 +17,4 @@ I like traffic lights.
 But not when they are red.
 EOF
 
-# vim:set ft=perl6:
+# vim:set ft=raku:
