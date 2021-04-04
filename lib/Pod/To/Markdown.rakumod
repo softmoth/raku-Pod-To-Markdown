@@ -1,52 +1,10 @@
-=NAME
-Pod::To::Markdown - Render Pod as Markdown
-
-=begin SYNOPSIS
-From command line:
-
-    $ raku --doc=Markdown lib/To/Class.pm
-
-From Raku:
-=begin code :lang<raku> :allow<B>
-B<use Pod::To::Markdown;>
-
-=NAME
-foobar.pl
-
-=SYNOPSIS
-    foobar.pl <options> files ...
-
-print B<pod2markdown($=pod)>;
-=end code
-=end SYNOPSIS
-
-=for EXPORTS
-    class Pod::To::Markdown
-    sub pod2markdown
-
-=DESCRIPTION
-
-# Trying to process this file itself results in the following:
-# $ raku --doc=Markdown lib/Pod/To/Markdown.pm6
-# ===SORRY!===
-# P6M Merging GLOBAL symbols failed: duplicate definition of symbol Markdown
-#
-# Here is a hack to generate README.md from this Pod:
-# raku lib/Pod/To/Markdown.pm6 > README.md
-
-sub MAIN() {
-    print ::('Pod::To::Markdown').render($=pod);
-}
-
-
-unit class Pod::To::Markdown;
+unit class Pod::To::Markdown:ver<0.2.0>:auth<github:softmoth>;
 
 use Pod::To::HTML:auth<github:Raku>;
 
 #my sub Debug(&code) { &code() }
 my sub Debug(&code) { }
 
-#| Render Pod as Markdown
 method render($pod, Bool :$no-fenced-codeblocks --> Str)
 {
     my Bool $*fenced-codeblocks = !$no-fenced-codeblocks;
@@ -55,19 +13,6 @@ method render($pod, Bool :$no-fenced-codeblocks --> Str)
     node2md($pod) ~ "\n";
 }
 
-=begin pod
-To render without fenced codeblocks (C<```>), as some markdown engines
-don't support this, use the :no-fenced-codeblocks option. If you want to
-have code show up as C<```raku> to enable syntax highlighting on
-certain markdown renderers, use:
-    =begin code
-    =begin code :lang<raku>
-    =end code
-=end pod
-#`[ Fake Pod directive to help syntax highlighters cope:
-    =end code ]
-
-#| Render Pod as Markdown, see .render()
 sub pod2markdown($pod, Bool :$no-fenced-codeblocks --> Str)
 is export
 {
@@ -296,9 +241,5 @@ sub table2md(Pod::Block::Table $pod) {
     @rows>>.join(' | ') ==> join("\n");
 }
 =end comment
-
-=LICENSE
-This is free software; you can redistribute it and/or modify it under the terms of
-The L<Artistic License 2.0|http://www.perlfoundation.org/artistic_license_2_0>.
 
 # vim: ts=8

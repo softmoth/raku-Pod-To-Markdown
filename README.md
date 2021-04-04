@@ -1,17 +1,16 @@
+[![Build Status](https://travis-ci.org/softmoth/raku-Pod-To-Markdown.svg?branch=master)](https://travis-ci.org/softmoth/raku-Pod-To-Markdown) [![Windows Status](https://ci.appveyor.com/api/projects/status/github/softmoth/raku-Pod-To-Markdown?branch=master&passingText=Windows%20-%20OK&failingText=Windows%20-%20FAIL&pendingText=Windows%20-%20pending&svg=true)](https://ci.appveyor.com/project/softmoth/raku-Pod-To-Markdown/branch/master)
+
 NAME
 ====
 
 Pod::To::Markdown - Render Pod as Markdown
-
-[![Build Status](https://travis-ci.org/softmoth/raku-Pod-To-Markdown.svg?branch=master)](https://travis-ci.org/softmoth/raku-Pod-To-Markdown)
-[![Windows status](https://ci.appveyor.com/api/projects/status/github/softmoth/raku-Pod-To-Markdown?branch=master&passingText=Windows%20-%20OK&failingText=Windows%20-%20FAIL&pendingText=Windows%20-%20pending&svg=true)](https://ci.appveyor.com/project/softmoth/raku-Pod-To-Markdown/branch/master)
 
 SYNOPSIS
 ========
 
 From command line:
 
-    $ raku --doc=Markdown lib/To/Class.pm
+    $ raku --doc=Markdown lib/To/Class.rakumod
 
 From Raku:
 
@@ -36,15 +35,10 @@ EXPORTS
 DESCRIPTION
 ===========
 
-
-
-### sub pod2markdown
+### method render
 
 ```raku
-sub pod2markdown(
-    $pod,
-    Bool :$no-fenced-codeblocks
-) returns Str
+method render($pod, Bool :$no-fenced-codeblocks --> Str)
 ```
 
 Render Pod as Markdown
@@ -53,18 +47,16 @@ To render without fenced codeblocks (```` ``` ````), as some markdown engines do
 
     =begin code :lang<raku>
 
-### method render
+### sub pod2markdown
 
 ```raku
-method render(
-    $pod,
-    Bool :$no-fenced-codeblocks
-) returns Str
+sub pod2markdown($pod, Bool :$no-fenced-codeblocks --> Str)
 ```
 
-Render Pod as Markdown, see pod2markdown
+Render Pod as Markdown, see .render()
 
 LICENSE
 =======
 
 This is free software; you can redistribute it and/or modify it under the terms of The [Artistic License 2.0](http://www.perlfoundation.org/artistic_license_2_0).
+
