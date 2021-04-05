@@ -20,7 +20,7 @@
   "raku": "6.d",
   "resources": [
   ],
-  "source-url": "https://github.com/softmoth/perl6-pod-to-markdown.git",
+  "source-url": "https://github.com/softmoth/raku-Pod-To-Markdown.git",
   "support": {
     "bugtracker": "https://github.com/softmoth/raku-Pod-To-Markdown/issues",
     "source": "https://github.com/softmoth/raku-Pod-To-Markdown.git"
