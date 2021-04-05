@@ -1,5 +1,7 @@
 unit class Pod::To::Markdown:ver<0.2.0>:auth<github:softmoth>;
 
+# NB We can rely on Pod::To::HTML to define Pod::Defn for us on old
+# compilers
 use Pod::To::HTML:auth<github:Raku>;
 
 #my sub Debug(&code) { &code() }
@@ -102,14 +104,6 @@ multi sub node2md(Pod::Block::Comment $pod) {
     ''
 }
 
-multi sub node2md(Pod::Item $pod) {
-    my $level = $pod.level // 1;
-    my $markdown = '* ' ~ node2md($pod.contents[0]);
-    $markdown ~= "\n\n" ~ node2md($pod.contents[1..*]).indent(2)
-        if $pod.contents.elems > 1;
-    $markdown.indent($level * 2);
-}
-
 my %Mformats =
     U => '_',
     I => '*',
@@ -161,6 +155,19 @@ multi sub node2md(Pod::FormattingCode $pod) {
         if %HTMLformats{$pod.type} :exists;
 
     $text;
+}
+
+multi sub node2md(Pod::Item $pod) {
+    my $level = $pod.level // 1;
+    my $markdown = '* ' ~ node2md($pod.contents[0]);
+    $markdown ~= "\n\n" ~ node2md($pod.contents[1..*]).indent(2)
+        if $pod.contents.elems > 1;
+    $markdown.indent($level * 2);
+}
+
+multi sub node2md(Pod::Defn $pod) {
+    my $fmt = %Mformats{$pod.config<formatted> // 'B'} // '';
+    $fmt ~ node2md($pod.term) ~ $fmt ~ "\n\n" ~ node2md($pod.contents)
 }
 
 multi sub node2md(Positional $pod) {
