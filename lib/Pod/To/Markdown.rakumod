@@ -1,4 +1,4 @@
-unit class Pod::To::Markdown:ver<0.2.0>:auth<github:softmoth>;
+unit class Pod::To::Markdown:ver<0.2.1>:auth<github:softmoth>;
 
 # NB We can rely on Pod::To::HTML to define Pod::Defn for us on old
 # compilers

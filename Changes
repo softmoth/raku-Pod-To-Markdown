@@ -1,6 +1,8 @@
 Revision history for Pod-To-Markdown
 
 {{$NEXT}}
+
+0.2.1  2021-04-04T22:28:46-04:00
     - Handle =defn (Pod::Defn) content (Issue #24)
 
 0.2.0  2021-04-04T17:40:52-04:00
