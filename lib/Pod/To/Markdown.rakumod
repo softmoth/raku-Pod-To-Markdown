@@ -77,15 +77,13 @@ multi sub node2md(Pod::Block::Declarator $pod) {
         when Sub {
             signature2md($lvl, $_, :!method);
         }
+        when Attribute {
+            my $name = .gist;
+            $name .= subst('!', '.') if .has_accessor;
+            head2md($lvl+1, "has $name");
+        }
         when .HOW ~~ Metamodel::ClassHOW {
-            if (.WHAT =:= Attribute) {
-                my $name = .gist;
-                $name .= subst('!', '.') if .has_accessor;
-                head2md($lvl+1, "has $name");
-            }
-            else {
-                head2md($lvl, "class $_.perl()");
-            }
+            head2md($lvl, "class $_.perl()");
         }
         when .HOW ~~ Metamodel::ModuleHOW {
             head2md($lvl, "module $_.perl()");
